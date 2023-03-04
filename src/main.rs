@@ -89,10 +89,11 @@ fn get_rand_not_occupied_move(board: &mut [usize]) -> Option<usize> {
 
 fn get_ai_move(board: &mut [usize], move_count: usize) {
     if move_count == 0 {
-        println!("My first shiny ass move:");
+        println!("My first shiny a$$ move:");
         // Generate random number in the range [0, 8]
         let num: usize = rand::thread_rng().gen_range(0..8);
         println!("{}", num);
+        assert_eq!(board[num], EMPTY);
         board[num] = AI;
     } else {
         let human_moves: usize = check_player(board, HUMAN);
@@ -101,21 +102,41 @@ fn get_ai_move(board: &mut [usize], move_count: usize) {
             process::exit(0x00);
         } else if human_moves == 2 {
             set_ai_next_move_when_2_occupied(board, HUMAN);
-        }
-
-        let ai_moves: usize = check_player(board, AI);
-        if ai_moves == 3 {
-            println!("I won ! Quiting the game");
-            process::exit(0x00);
-        } else if ai_moves == 2 {
-            set_ai_next_move_when_2_occupied(board, AI);
+            let ai_local_moves: usize = check_player(board, AI);
+             if ai_local_moves == 3 {
+                println!("You lost. Exiting the game ");
+                process::exit(0x00);
+            }
         } else {
-            let m1 = get_rand_not_occupied_move(board);
-            match m1 {
-                Some(x) => board[x] = AI,
-                None => {
-                    println!("Error: There is no move");
+            let ai_moves: usize = check_player(board, AI);
+            if ai_moves == 3 {
+                println!("I won ! Quiting the game");
+                process::exit(0x00);
+            } else if ai_moves == 2 {
+                set_ai_next_move_when_2_occupied(board, AI);
+                let ai_local_moves: usize = check_player(board, AI);
+                if ai_local_moves == 3 {
+                    print_board(&board);
+                    println!("You lost. Exiting the game ");
                     process::exit(0x00);
+                }
+            } else {
+                let m1 = get_rand_not_occupied_move(board);
+                match m1 {
+                    Some(x) => {
+                        assert_eq!(board[x], EMPTY);
+                        board[x] = AI;
+                        let ai_local_moves: usize = check_player(board, AI);
+                        if ai_local_moves == 3 {
+                            print_board(& board);
+                            println!("You lost. Exiting the game ");
+                            process::exit(0x00);
+                        }
+                    }
+                    None => {
+                        println!("Error: There is no move");
+                        process::exit(0x00);
+                    }
                 }
             }
         }
@@ -130,52 +151,76 @@ fn print_board(board: &[usize]) {
 
 fn set_ai_next_move_when_2_occupied(board: &mut [usize], player: usize) {
     if board[0] == player && board[1] == player && board[2] == EMPTY {
+        assert_eq!(board[2], EMPTY);
         board[2] = AI;
     } else if board[0] == EMPTY && board[1] == player && board[2] == player {
+        assert_eq!(board[0], EMPTY);
         board[0] = AI;
     } else if board[0] == player && board[1] == EMPTY && board[2] == player {
+        assert_eq!(board[1], EMPTY);
         board[1] = AI;
     } else if board[3] == player && board[4] == player && board[5] == EMPTY {
+        assert_eq!(board[5], EMPTY);
         board[5] = AI;
     } else if board[3] == EMPTY && board[4] == player && board[5] == player {
+        assert_eq!(board[3], EMPTY);
         board[3] = AI;
     } else if board[3] == player && board[4] == EMPTY && board[5] == player {
+        assert_eq!(board[4], EMPTY);
         board[4] = AI;
     } else if board[6] == player && board[7] == player && board[8] == EMPTY {
+        assert_eq!(board[8], EMPTY);
         board[8] = AI;
     } else if board[6] == EMPTY && board[7] == player && board[8] == player {
+        assert_eq!(board[6], EMPTY);
         board[6] = AI;
     } else if board[6] == player && board[7] == EMPTY && board[8] == player {
+        assert_eq!(board[7], EMPTY);
         board[7] = AI;
     } else if board[0] == player && board[3] == player && board[6] == EMPTY {
+        assert_eq!(board[6], EMPTY);
         board[6] = AI;
     } else if board[0] == EMPTY && board[3] == player && board[6] == player {
+        assert_eq!(board[0], EMPTY);
         board[0] = AI;
     } else if board[0] == player && board[3] == EMPTY && board[6] == player {
+        assert_eq!(board[3], EMPTY);
         board[3] = AI;
     } else if board[1] == player && board[4] == player && board[7] == EMPTY {
+        assert_eq!(board[7], EMPTY);
         board[7] = AI;
     } else if board[1] == EMPTY && board[4] == player && board[7] == player {
+        assert_eq!(board[1], EMPTY);
         board[1] = AI;
     } else if board[1] == player && board[4] == EMPTY && board[7] == player {
+        assert_eq!(board[4], EMPTY);
         board[4] = AI;
     } else if board[2] == player && board[5] == player && board[8] == EMPTY {
+        assert_eq!(board[8], EMPTY);
         board[8] = AI;
     } else if board[2] == EMPTY && board[5] == player && board[8] == player {
+        assert_eq!(board[2], EMPTY);
         board[2] = AI;
     } else if board[2] == player && board[5] == EMPTY && board[8] == player {
+        assert_eq!(board[5], EMPTY);
         board[5] = AI;
     } else if board[0] == player && board[4] == player && board[8] == EMPTY {
+        assert_eq!(board[8], EMPTY);
         board[8] = AI;
     } else if board[0] == player && board[4] == EMPTY && board[8] == player {
+        assert_eq!(board[4], EMPTY);
         board[4] = AI;
     } else if board[0] == EMPTY && board[4] == player && board[8] == player {
+        assert_eq!(board[0], EMPTY);
         board[0] = AI;
     } else if board[2] == player && board[4] == player && board[6] == EMPTY {
+        assert_eq!(board[6], EMPTY);
         board[6] = AI;
     } else if board[2] == player && board[4] == EMPTY && board[6] == player {
+        assert_eq!(board[4], EMPTY);
         board[4] = AI;
     } else if board[2] == EMPTY && board[4] == player && board[6] == player {
+        assert_eq!(board[2], EMPTY);
         board[2] = AI;
     } else {
         panic!("Couldn't find any moves");
@@ -193,18 +238,37 @@ fn check_player(board: &[usize], player: usize) -> usize {
         || board[2] == player && board[4] == player && board[6] == player
     {
         return 3;
-    } else if board[0] == player && board[1] == player
-        || board[1] == player && board[2] == player
-        || board[3] == player && board[4] == player
-        || board[4] == player && board[5] == player
-        || board[6] == player && board[7] == player
-        || board[7] == player && board[8] == player
-        || board[0] == player && board[3] == player
-        || board[3] == player && board[6] == player
-        || board[1] == player && board[4] == player
-        || board[4] == player && board[7] == player
-        || board[2] == player && board[5] == player
-        || board[5] == player && board[8] == player
+    } else if board[0] == player && board[1] == player && board[2] == EMPTY
+        || board[0] == EMPTY  && board[1] == player && board[2] == player
+        || board[0] == player && board[1] == EMPTY  && board[2] == player
+
+        || board[3] == player && board[4] == player && board[5] == EMPTY
+        || board[3] == EMPTY  && board[4] == player && board[5] == player
+        || board[3] == player && board[4] == EMPTY  && board[5] == player
+
+        || board[6] == player && board[7] == player && board[8] == EMPTY
+        || board[6] == EMPTY  && board[7] == player && board[8] == player
+        || board[6] == player && board[7] == EMPTY  && board[8] == player
+
+        || board[0] == player && board[3] == player && board[6] == EMPTY
+        || board[0] == EMPTY  && board[3] == player && board[6] == player
+        || board[0] == player && board[3] == EMPTY  && board[6] == player
+
+        || board[1] == player && board[4] == player && board[7] == EMPTY
+        || board[1] == EMPTY  && board[4] == player && board[7] == player
+        || board[1] == player && board[4] == EMPTY  && board[7] == player
+
+        || board[2] == player && board[5] == player && board[8] == EMPTY
+        || board[2] == EMPTY  && board[5] == player && board[8] == player
+        || board[2] == player && board[5] == EMPTY  && board[8] == player
+
+        || board[0] == player && board[4] == player && board[8] == EMPTY
+        || board[0] == EMPTY  && board[4] == player && board[8] == player
+        || board[0] == player && board[4] == EMPTY  && board[8] == player
+
+        || board[2] == player && board[4] == player && board[6] == EMPTY
+        || board[2] == EMPTY  && board[4] == player && board[6] == player
+        || board[2] == player && board[4] == EMPTY  && board[6] == player
     {
         return 2;
     } else if board[0] == player
