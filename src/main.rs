@@ -129,87 +129,60 @@ fn print_board(board: &[usize]) {
 }
 
 fn set_ai_next_move_when_2_occupied(board: &mut [usize], player: usize) {
-    
     if board[0] == player && board[1] == player && board[2] == EMPTY {
         board[2] = AI;
-    }
-    else if board[0] == EMPTY && board[1] == player && board[2] == player {
+    } else if board[0] == EMPTY && board[1] == player && board[2] == player {
         board[0] = AI;
-    }
-    else if board[0] == player && board[1] == EMPTY && board[2] == player {
+    } else if board[0] == player && board[1] == EMPTY && board[2] == player {
         board[1] = AI;
-    }
-    else if board[3] == player && board[4] == player && board[5] == EMPTY {
+    } else if board[3] == player && board[4] == player && board[5] == EMPTY {
         board[5] = AI;
-    }
-    else if board[3] == EMPTY && board[4] == player && board[5] == player {
+    } else if board[3] == EMPTY && board[4] == player && board[5] == player {
         board[3] = AI;
-    }
-    else if board[3] == player && board[4] == EMPTY && board[5] == player {
+    } else if board[3] == player && board[4] == EMPTY && board[5] == player {
         board[4] = AI;
-    }
-    else if board[6] == player && board[7] == player && board[8] == EMPTY {
+    } else if board[6] == player && board[7] == player && board[8] == EMPTY {
         board[8] = AI;
-    }
-    else if board[6] == EMPTY && board[7] == player && board[8] == player {
+    } else if board[6] == EMPTY && board[7] == player && board[8] == player {
         board[6] = AI;
-    }
-    else if board[6] == player && board[7] == EMPTY && board[8] == player {
+    } else if board[6] == player && board[7] == EMPTY && board[8] == player {
         board[7] = AI;
-    }
-    else if board[0] == player && board[3] == player && board[6] == EMPTY {
+    } else if board[0] == player && board[3] == player && board[6] == EMPTY {
         board[6] = AI;
-    }
-    else if board[0] == EMPTY && board[3] == player && board[6] == player {
+    } else if board[0] == EMPTY && board[3] == player && board[6] == player {
         board[0] = AI;
-    }
-    else if board[0] == player && board[3] == EMPTY && board[6] == player {
+    } else if board[0] == player && board[3] == EMPTY && board[6] == player {
         board[3] = AI;
-    }
-    else if board[1] == player && board[4] == player && board[7] == EMPTY {
+    } else if board[1] == player && board[4] == player && board[7] == EMPTY {
         board[7] = AI;
-    }
-    else if board[1] == EMPTY && board[4] == player && board[7] == player {
+    } else if board[1] == EMPTY && board[4] == player && board[7] == player {
         board[1] = AI;
-    }
-    else if board[1] == player && board[4] == EMPTY && board[7] == player {
+    } else if board[1] == player && board[4] == EMPTY && board[7] == player {
         board[4] = AI;
-    }
-    else if board[2] == player && board[5] == player && board[8] == EMPTY {
+    } else if board[2] == player && board[5] == player && board[8] == EMPTY {
         board[8] = AI;
-    }
-    else if board[2] == EMPTY && board[5] == player && board[8] == player {
+    } else if board[2] == EMPTY && board[5] == player && board[8] == player {
         board[2] = AI;
-    }
-    else if board[2] == player && board[5] == EMPTY && board[8] == player {
+    } else if board[2] == player && board[5] == EMPTY && board[8] == player {
         board[5] = AI;
-    }
-    else if board[0] == player && board[4] == player && board[8] == EMPTY {
+    } else if board[0] == player && board[4] == player && board[8] == EMPTY {
         board[8] = AI;
-    }
-    else if board[0] == player && board[4] == EMPTY && board[8] == player {
+    } else if board[0] == player && board[4] == EMPTY && board[8] == player {
         board[4] = AI;
-    }
-    else if board[0] == EMPTY && board[4] == player && board[8] == player {
+    } else if board[0] == EMPTY && board[4] == player && board[8] == player {
         board[0] = AI;
-    }
-    else if board[2] == player && board[4] == player && board[6] == EMPTY {
+    } else if board[2] == player && board[4] == player && board[6] == EMPTY {
         board[6] = AI;
-    }
-    else if board[2] == player && board[4] == EMPTY && board[6] == player {
+    } else if board[2] == player && board[4] == EMPTY && board[6] == player {
         board[4] = AI;
-    }
-    else if board[2] == EMPTY && board[4] == player && board[6] == player {
+    } else if board[2] == EMPTY && board[4] == player && board[6] == player {
         board[2] = AI;
-    }
-    else {
+    } else {
         panic!("Couldn't find any moves");
     }
-
 }
 
 fn check_player(board: &[usize], player: usize) -> usize {
-   
     if board[0] == player && board[1] == player && board[2] == player
         || board[3] == player && board[4] == player && board[5] == player
         || board[6] == player && board[7] == player && board[8] == player
@@ -220,8 +193,7 @@ fn check_player(board: &[usize], player: usize) -> usize {
         || board[2] == player && board[4] == player && board[6] == player
     {
         return 3;
-    }
-    else if board[0] == player && board[1] == player
+    } else if board[0] == player && board[1] == player
         || board[1] == player && board[2] == player
         || board[3] == player && board[4] == player
         || board[4] == player && board[5] == player
@@ -252,7 +224,6 @@ fn check_player(board: &[usize], player: usize) -> usize {
 }
 
 fn main() {
-    
     let mut guess = String::new();
     let mut m = [0; 9]; // tic tac toe board
     let mut count: usize = 0;
@@ -402,7 +373,6 @@ mod tests {
         }
     }
 
-
     #[test]
     fn check_player_test() {
         let mut m = [0; 9]; // tic tac toe board
@@ -420,9 +390,12 @@ mod tests {
         let mut count: u32 = 0;
 
         let human_moves: usize = check_player(&m, HUMAN);
-        
-        assert_eq!( human_moves, 3, "we are testing 3 human moves {} and {}",human_moves, 0);
-          
+
+        assert_eq!(
+            human_moves, 3,
+            "we are testing 3 human moves {} and {}",
+            human_moves, 0
+        );
     }
 
     #[test]
@@ -442,9 +415,12 @@ mod tests {
         let mut count: u32 = 0;
 
         let human_moves: usize = check_player(&m, HUMAN);
-        
-        assert_eq!( human_moves, 3, "we are testing 3 human moves {} and {}",human_moves, 0);
-          
+
+        assert_eq!(
+            human_moves, 3,
+            "we are testing 3 human moves {} and {}",
+            human_moves, 0
+        );
     }
 
     #[test]
@@ -464,9 +440,12 @@ mod tests {
         let mut count: u32 = 0;
 
         let human_moves: usize = check_player(&m, HUMAN);
-        
-        assert_eq!( human_moves, 3, "we are testing 3 human moves {} and {}",human_moves, 0);
 
+        assert_eq!(
+            human_moves, 3,
+            "we are testing 3 human moves {} and {}",
+            human_moves, 0
+        );
     }
 
     #[test]
@@ -486,9 +465,12 @@ mod tests {
         let mut count: u32 = 0;
 
         let human_moves: usize = check_player(&m, HUMAN);
-        
-        assert_eq!( human_moves, 1, "we are testing 3 human moves {} and {}",human_moves, 1);
-          
+
+        assert_eq!(
+            human_moves, 1,
+            "we are testing 3 human moves {} and {}",
+            human_moves, 1
+        );
     }
 
     #[test]
@@ -508,9 +490,12 @@ mod tests {
         let mut count: u32 = 0;
 
         let human_moves: usize = check_player(&m, HUMAN);
-        
-        assert_eq!( human_moves, 1, "we are testing 3 human moves {} and {}",human_moves, 1);
-          
+
+        assert_eq!(
+            human_moves, 1,
+            "we are testing 3 human moves {} and {}",
+            human_moves, 1
+        );
     }
 
     #[test]
@@ -530,11 +515,13 @@ mod tests {
         let mut count: u32 = 0;
 
         let human_moves: usize = check_player(&mut m, HUMAN);
-        
-        assert_eq!( human_moves, 1, "we are testing 3 human moves {} and {}",human_moves, 0);
-          
-    }
 
+        assert_eq!(
+            human_moves, 1,
+            "we are testing 3 human moves {} and {}",
+            human_moves, 0
+        );
+    }
 
     #[test]
     fn check_player_test6() {
@@ -553,9 +540,12 @@ mod tests {
         let mut count: u32 = 0;
 
         let human_moves: usize = check_player(&m, HUMAN);
-        
-        assert_eq!( human_moves, 2, "we are testing 3 human moves {} and {}",human_moves, 2);
-          
+
+        assert_eq!(
+            human_moves, 2,
+            "we are testing 3 human moves {} and {}",
+            human_moves, 2
+        );
     }
 
     #[test]
@@ -571,14 +561,17 @@ mod tests {
         m[6] = 0;
         m[7] = 0;
         m[8] = 0;
-        
+
         set_ai_next_move_when_2_occupied(&mut m, HUMAN);
-        
-        assert_eq!( m[2], AI, "we are testing ai filling when 2 occupied {} and {}",m[2], AI);
-          
+
+        assert_eq!(
+            m[2], AI,
+            "we are testing ai filling when 2 occupied {} and {}",
+            m[2], AI
+        );
     }
 
-    #[test] 
+    #[test]
     fn set_ai_next_move_when_2_occupied_test2() {
         let mut m = [0; 9]; // tic tac toe board
 
@@ -591,11 +584,13 @@ mod tests {
         m[6] = 0;
         m[7] = 0;
         m[8] = 0;
-        
+
         set_ai_next_move_when_2_occupied(&mut m, HUMAN);
-        
-        assert_eq!( m[0], AI, "we are testing ai filling when 2 occupied {} and {}",m[0], AI);
-          
+
+        assert_eq!(
+            m[0], AI,
+            "we are testing ai filling when 2 occupied {} and {}",
+            m[0], AI
+        );
     }
 }
-    
