@@ -14,10 +14,11 @@ enum GameStateMachine {
     ExitGame,
 }
 
-fn get_user_move() -> usize {
+fn get_user_move(max_move: usize) -> usize {
     let mut guess = String::new();
-    let mut is_value_ok = false;
-    while is_value_ok == false {
+    let mut user_move = None;
+    
+    while user_move.is_none() {
         io::stdin()
             .read_line(&mut guess)
             .expect("Failed to read line");
@@ -28,17 +29,20 @@ fn get_user_move() -> usize {
         }
 
         let x: usize = guess.trim().parse::<usize>().expect("Parsable");
-        if x > 9 {
-            println!("The number is outside the range.Try again")
+
+        if x >= max_move {
+            println!("The number is outside the range.Try again");
         } else {
-            return x;
+            user_move = Some(x);
         }
     }
-    return 0;
+
+    return user_move.unwrap();
 }
 
 fn get_human_move(m: &mut [usize], move_count: usize) {
-    let number: usize = get_user_move();
+    let number = get_user_move(m.len()); 
+    
     if m[number] == EMPTY {
         m[number] = HUMAN;
 
