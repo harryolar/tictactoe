@@ -54,6 +54,7 @@ fn get_human_move(m: &mut [usize], move_count: usize) {
 
         let human_moves: usize = check_player(m, HUMAN);
         if human_moves == 3 {
+            print_board(m);
             println!("You won! Congrats ! Quiting the game ");
             process::exit(0x00);
         }
@@ -108,12 +109,14 @@ fn get_ai_move(board: &mut [usize], move_count: usize) {
     } else {
         let human_moves: usize = check_player(board, HUMAN);
         if human_moves == 3 {
+            print_board( board);
             println!("You won ! Quiting the game");
             process::exit(0x00);
         } else if human_moves == 2 {
             set_ai_next_move_when_2_occupied(board, HUMAN);
             let ai_local_moves: usize = check_player(board, AI);
              if ai_local_moves == 3 {
+                print_board( board);
                 println!("You lost. Exiting the game ");
                 process::exit(0x00);
             }
@@ -126,7 +129,7 @@ fn get_ai_move(board: &mut [usize], move_count: usize) {
                 set_ai_next_move_when_2_occupied(board, AI);
                 let ai_local_moves: usize = check_player(board, AI);
                 if ai_local_moves == 3 {
-                    print_board(&board);
+                    print_board(board);
                     println!("You lost. Exiting the game ");
                     process::exit(0x00);
                 }
@@ -138,7 +141,7 @@ fn get_ai_move(board: &mut [usize], move_count: usize) {
                         board[x] = AI;
                         let ai_local_moves: usize = check_player(board, AI);
                         if ai_local_moves == 3 {
-                            print_board(& board);
+                            print_board(board);
                             println!("You lost. Exiting the game ");
                             process::exit(0x00);
                         }
@@ -308,6 +311,7 @@ fn main() {
     while is_still_playing {
         match game_state_machine {
             GameStateMachine::Starting => {
+                guess.clear();
                 println!("Hello, to tic tac toe . Do you want to start? Y/N or Q for quit");
                 io::stdin()
                     .read_line(&mut guess)
