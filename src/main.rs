@@ -16,28 +16,34 @@ enum GameStateMachine {
 
 fn get_user_move(max_move: usize) -> usize {
     let mut guess = String::new();
-    let mut user_move = None;
     
-    while user_move.is_none() {
+    loop {
+        // clean string before use
+        guess.clear();
+
         io::stdin()
             .read_line(&mut guess)
             .expect("Failed to read line");
 
-        if guess.trim() == "Q" || guess.trim() == "q" {
+        // Trim white space from user input
+        let user_input = guess.trim();
+
+        if let Ok(x) = user_input.parse::<usize>() {
+            if x < max_move {
+                return x;
+            }
+        } else if user_input == "Q" || user_input == "q" {
             println!("Quiting");
             process::exit(0x00);
-        }
-
-        let x: usize = guess.trim().parse::<usize>().expect("Parsable");
-
-        if x >= max_move {
-            println!("The number is outside the range.Try again");
         } else {
-            user_move = Some(x);
+            println!("Could not parse input `{}`", user_input);
         }
+
+        println!("Expected a number between 0 and {}.", max_move.saturating_sub(1));
+        println!("Please try again!, or enter `q` to quit");
     }
 
-    return user_move.unwrap();
+    unreachable!()
 }
 
 fn get_human_move(m: &mut [usize], move_count: usize) {
