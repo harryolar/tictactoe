@@ -16,7 +16,7 @@ enum GameStateMachine {
 
 fn get_user_move(max_move: usize) -> usize {
     let mut guess = String::new();
-    
+
     loop {
         // clean string before use
         guess.clear();
@@ -39,7 +39,10 @@ fn get_user_move(max_move: usize) -> usize {
             println!("Could not parse input `{}`", user_input);
         }
 
-        println!("Expected a number between 0 and {}.", max_move.saturating_sub(1));
+        println!(
+            "Expected a number between 0 and {}.",
+            max_move.saturating_sub(1)
+        );
         println!("Please try again!, or enter `q` to quit");
     }
 
@@ -47,8 +50,8 @@ fn get_user_move(max_move: usize) -> usize {
 }
 
 fn get_human_move(m: &mut [usize], move_count: usize) {
-    let number = get_user_move(m.len()); 
-    
+    let number = get_user_move(m.len());
+
     if m[number] == EMPTY {
         m[number] = HUMAN;
 
@@ -109,16 +112,30 @@ fn get_ai_move(board: &mut [usize], move_count: usize) {
     } else {
         let human_moves: usize = check_player(board, HUMAN);
         if human_moves == 3 {
-            print_board( board);
+            print_board(board);
             println!("You won ! Quiting the game");
             process::exit(0x00);
         } else if human_moves == 2 {
-            set_ai_next_move_when_2_occupied(board, HUMAN);
-            let ai_local_moves: usize = check_player(board, AI);
-             if ai_local_moves == 3 {
-                print_board( board);
-                println!("You lost. Exiting the game ");
+            let ai_moves: usize = check_player(board, AI);
+            if ai_moves == 3 {
+                println!("I won ! Quiting the game");
                 process::exit(0x00);
+            } else if ai_moves == 2 {
+                set_ai_next_move_when_2_occupied(board, AI);
+                let ai_local_moves: usize = check_player(board, AI);
+                if ai_local_moves == 3 {
+                    print_board(board);
+                    println!("You lost. Exiting the game ");
+                    process::exit(0x00);
+                }
+            } else {
+                set_ai_next_move_when_2_occupied(board, HUMAN);
+                let ai_local_moves: usize = check_player(board, AI);
+                if ai_local_moves == 3 {
+                    print_board(board);
+                    println!("You lost. Exiting the game ");
+                    process::exit(0x00);
+                }
             }
         } else {
             let ai_moves: usize = check_player(board, AI);
@@ -252,36 +269,29 @@ fn check_player(board: &[usize], player: usize) -> usize {
     {
         return 3;
     } else if board[0] == player && board[1] == player && board[2] == EMPTY
-        || board[0] == EMPTY  && board[1] == player && board[2] == player
-        || board[0] == player && board[1] == EMPTY  && board[2] == player
-
+        || board[0] == EMPTY && board[1] == player && board[2] == player
+        || board[0] == player && board[1] == EMPTY && board[2] == player
         || board[3] == player && board[4] == player && board[5] == EMPTY
-        || board[3] == EMPTY  && board[4] == player && board[5] == player
-        || board[3] == player && board[4] == EMPTY  && board[5] == player
-
+        || board[3] == EMPTY && board[4] == player && board[5] == player
+        || board[3] == player && board[4] == EMPTY && board[5] == player
         || board[6] == player && board[7] == player && board[8] == EMPTY
-        || board[6] == EMPTY  && board[7] == player && board[8] == player
-        || board[6] == player && board[7] == EMPTY  && board[8] == player
-
+        || board[6] == EMPTY && board[7] == player && board[8] == player
+        || board[6] == player && board[7] == EMPTY && board[8] == player
         || board[0] == player && board[3] == player && board[6] == EMPTY
-        || board[0] == EMPTY  && board[3] == player && board[6] == player
-        || board[0] == player && board[3] == EMPTY  && board[6] == player
-
+        || board[0] == EMPTY && board[3] == player && board[6] == player
+        || board[0] == player && board[3] == EMPTY && board[6] == player
         || board[1] == player && board[4] == player && board[7] == EMPTY
-        || board[1] == EMPTY  && board[4] == player && board[7] == player
-        || board[1] == player && board[4] == EMPTY  && board[7] == player
-
+        || board[1] == EMPTY && board[4] == player && board[7] == player
+        || board[1] == player && board[4] == EMPTY && board[7] == player
         || board[2] == player && board[5] == player && board[8] == EMPTY
-        || board[2] == EMPTY  && board[5] == player && board[8] == player
-        || board[2] == player && board[5] == EMPTY  && board[8] == player
-
+        || board[2] == EMPTY && board[5] == player && board[8] == player
+        || board[2] == player && board[5] == EMPTY && board[8] == player
         || board[0] == player && board[4] == player && board[8] == EMPTY
-        || board[0] == EMPTY  && board[4] == player && board[8] == player
-        || board[0] == player && board[4] == EMPTY  && board[8] == player
-
+        || board[0] == EMPTY && board[4] == player && board[8] == player
+        || board[0] == player && board[4] == EMPTY && board[8] == player
         || board[2] == player && board[4] == player && board[6] == EMPTY
-        || board[2] == EMPTY  && board[4] == player && board[6] == player
-        || board[2] == player && board[4] == EMPTY  && board[6] == player
+        || board[2] == EMPTY && board[4] == player && board[6] == player
+        || board[2] == player && board[4] == EMPTY && board[6] == player
     {
         return 2;
     } else if board[0] == player
